@@ -1,5 +1,4 @@
 import math
-
 from datamodel import OrderDepth, UserId, TradingState, Order
 from typing import List
 import numpy as np
@@ -48,6 +47,7 @@ class Trader:
         sell_orders = order_depth.sell_orders
 
         s = (list(buy_orders.keys())[0] + list(sell_orders.keys())[0]) / 2
+
         q = 0
         gamma = 0.05
         var = 0
@@ -62,9 +62,11 @@ class Trader:
             var = np.var(self.mid_prices[-1:-lookback - 1:-1])
             q = position
 
-        r = s - (q * gamma * var * (T - timestamp))
+        r = s - (q * gamma * var * (T - timestamp)/T)
+        print(r)
 
-        delta = (gamma * var * (T - timestamp) + (2 / gamma * math.log(1 + (gamma / k))))
+        delta = (gamma * var * (T - timestamp)/T + (2 / gamma * math.log(1 + (gamma / k))))
+        print(delta)
 
         new_bid = math.ceil((r - delta)/2)
         new_ask = math.ceil((r + delta)/2)

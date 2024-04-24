@@ -27,9 +27,9 @@ class Trader:
             except:
                 q = 0
 
-            gamma = 0.1
+            gamma = 0.01
             var = 0.1
-            k = 1
+            k = 0.9
             T = 999900
 
             # if int(s) != 0:
@@ -37,9 +37,9 @@ class Trader:
             #     prices.append(s)
             #     self.price_history.update({product: prices})
             #
-            # lookback = 1
+            # lookback = 10
             # if len(self.price_history.get(product, [])) >= lookback:
-            #     var = np.var(self.price_history.get(product)[-1:-lookback-1:-1])
+            #     var = np.var(self.price_history.get(product))
 
             r = s - (q * gamma * var * (1 - state.timestamp/T))
             delta = (gamma * var * (1 - state.timestamp/T) + (2 / gamma * math.log(1 + gamma/k)))
